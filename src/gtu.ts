@@ -56,6 +56,245 @@ const prices = {
 	SSC: 500,
 } as const;
 
+const ships: Kit[] = [
+	{
+		name: 'Enhanced large transport',
+		components: {
+			LHP: 94,
+			BR1: 1,
+			CQM: 1,
+			FSE: 1,
+			FFC: 1,
+			LCB: 1,
+			LFE: 2,
+			MFE: 2,
+			LFL: 1,
+			QCR: 1,
+			SFE: 1,
+			SSC: 128,
+			MSL: 1,
+		}
+	},
+	{
+		name: 'Expedition large transport',
+		components: {
+			BR1: 1,
+			CQL: 1,
+			FFC: 1,
+			FSE: 1,
+			LCB: 1,
+			LFE: 2,
+			LFL: 1,
+			LSL: 1,
+			MFE: 3,
+			QCR: 1,
+			RDL: 1,
+			RHP: 100,
+			SFE: 1,
+			SSC: 142,
+			STS: 1,
+		}
+	},
+	{
+		name: 'Standard large transport',
+		components: {
+			BHP: 90,
+			BR1: 1,
+			CQM: 1,
+			ENG: 1,
+			FFC: 1,
+			LCB: 1,
+			LFE: 2,
+			MFE: 1,
+			SFL: 1,
+			RCT: 1,
+			SFE: 2,
+			SSC: 121,
+			SSL: 1,
+		}
+	},
+	{
+		name: 'Enhanced heavy freighter',
+		components: {
+			LHP: 68,
+			BR1: 1,
+			CQS: 1,
+			FSE: 1,
+			FFC: 1,
+			LFE: 1,
+			MFE: 2,
+			LFL: 1,
+			QCR: 1,
+			SFE: 1,
+			SSC: 78,
+			MSL: 1,
+			WCB: 1,
+		}
+	},
+	{
+		name: 'Standard heavy freighter',
+		components: {
+			BHP: 64,
+			BR1: 1,
+			CQS: 1,
+			ENG: 1,
+			FFC: 1,
+			LFE: 1,
+			MFE: 1,
+			SFL: 1,
+			RCT: 1,
+			SFE: 2,
+			SSC: 71,
+			SSL: 1,
+			WCB: 1,
+		}
+	},
+	{
+		name: 'Enhanced BEAST',
+		components: {
+			AEN: 1,
+			AHP: 159,
+			BR2: 1,
+			CQL: 1,
+			FFC: 1,
+			HCB: 1,
+			HPR: 1,
+			LFE: 5,
+			LFL: 1,
+			MFE: 2,
+			MSL: 1,
+			SFE: 2,
+			SSC: 284,
+		}
+	},
+	{
+		name: 'Standard BEAST',
+		components: {
+			BHP: 157,
+			BR1: 1,
+			CQL: 1,
+			FFC: 1,
+			FSE: 1,
+			HCB: 1,
+			LFE: 5,
+			LFL: 1,
+			MFE: 2,
+			MSL: 1,
+			QCR: 1,
+			SFE: 1,
+			SSC: 278,
+		}
+	},
+	{
+		name: 'Firefly FTL courier',
+		components: {
+			AGS: 1,
+			BR1: 1,
+			CQT: 1,
+			FFC: 1,
+			FSE: 1,
+			LFL: 1,
+			MFE: 2,
+			QCR: 1,
+			RHP: 34,
+			SFE: 1,
+			SSC: 27,
+			SSL: 1,
+			TCB: 1,
+		}
+	},
+	{
+		name: 'Voyager deep space explorer',
+		components: {
+			BR1: 1,
+			CQT: 1,
+			FFC: 1,
+			FSE: 1,
+			LFL: 1,
+			LHP: 34,
+			MFE: 2,
+			QCR: 1,
+			RDL: 1,
+			SFE: 1,
+			SSC: 27,
+			SSL: 1,
+			STS: 1,
+			TCB: 1,
+		}
+	},
+	{
+		name: 'STL-only courier shuttle',
+		components: {
+			AGS: 1,
+			BRS: 1,
+			CQT: 1,
+			FSE: 1,
+			RHP: 43,
+			SCB: 1,
+			SSC: 40,
+			SSL: 1,
+		}
+	},
+	{
+		name: 'STL-only economy shuttle',
+		components: {
+			BRS: 1,
+			CQT: 1,
+			GEN: 1,
+			LHP: 43,
+			SCB: 1,
+			SSC: 40,
+			SSL: 1,
+		}
+	},
+];
+const upgrades: Kit[] = [
+	{
+		name: 'WCB starter ship upgrade',
+		components: {
+			BHP: 16,
+			LFE: 1,
+			SSC: 25,
+			WCB: 1,
+		}
+	},
+	{
+		name: 'Enhanced WCB starter ship upgrade',
+		components: {
+			BHP: 20,
+			LFE: 1,
+			LFL: 1,
+			MSL: 1,
+			SSC: 32,
+			WCB: 1,
+		}
+	},
+	{
+		name: 'MCB starter ship upgrade',
+		components: {
+			BHP: 16,
+			LFE: 1,
+			MCB: 1,
+			SSC: 25,
+		}
+	},
+	{
+		name: 'LCB starter ship upgrade',
+		components: {
+			BHP: 42,
+			CQM: 1,
+			LFE: 2,
+			LCB: 1,
+			SSC: 75,
+		}
+	},
+]
+
+interface Kit {
+	name: string,
+	components: Partial<Record<keyof typeof prices, number>>
+}
+
 const fmt = new Intl.NumberFormat(undefined, {maximumFractionDigits: 0});
 
 @customElement('gtu-table')
@@ -76,6 +315,14 @@ export class GTUTable extends LitElement {
 	protected render() {
 		const total = this.count.entries().reduce((acc, [ticker, count]) => acc + (count * prices[ticker]), 0);
 		return html`
+		<h2>Ship kits</h2>
+		<section>
+			${ships.map((upgrade) => this.renderKit(upgrade))}
+		</section>
+		<h2>Upgrade kits</h2>
+		<section>
+			${upgrades.map((upgrade) => this.renderKit(upgrade))}
+		</section>
 		<table>
 			<thead>
 				<tr>
@@ -96,6 +343,27 @@ export class GTUTable extends LitElement {
 			</tbody>
 		</table>
 		`;
+	}
+
+	private renderKit(upgrade: Kit) {
+		const total = entries(upgrade.components).reduce(
+				(acc, [ticker, count]) => acc + (count! * prices[ticker]), 0);
+		return html`
+			<article @click=${() => this.onKitClick(upgrade)}>
+				<h3>${upgrade.name}</h3>
+				<b>$${fmt.format(total)}</b>
+				<table>
+					<tbody>
+						${entries(upgrade.components).map(([ticker, count]) => html`
+							<tr>
+								<td>${ticker}</td>
+								<td>${count}</td>
+							</tr>
+						`)}
+					</tbody>
+				</table>
+			</article>
+		`
 	}
 
 	private renderRow(ticker: keyof typeof prices, price: number, count: number | undefined) {
@@ -120,7 +388,38 @@ export class GTUTable extends LitElement {
 		}
 	}
 
+	private onKitClick(upgrade: Kit) {
+		for (const [ticker] of entries(prices))
+			if (ticker in upgrade.components)
+				this.count.set(ticker, upgrade.components[ticker]!);
+			else
+				this.count.delete(ticker);
+		this.requestUpdate('count');
+	}
+
 	static styles = css`
+		section {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 1em;
+			margin: 1em 0;
+
+			article {
+				padding: 10px 12px;
+				background-color: #1118;
+				cursor: pointer;
+				border: 1px solid #555;
+				border-radius: 3px;
+				transition: border-color 0.5s, background-color 0.5s;
+				&:hover {
+					border-color: #747;
+					background-color: #111c;
+				}
+
+				h3 { margin: 0 0 0.5em; }
+			}
+		}
+
 		td {
 			font-family: monospace;
 			text-align: right;
