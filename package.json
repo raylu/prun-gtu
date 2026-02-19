@@ -1,0 +1,16 @@
+{
+  "name": "prun-gtu",
+  "version": "0",
+  "description": "GTU Shipworks",
+  "scripts": {
+    "build": "bun build src/gtu.ts --outdir dist --target browser --sourcemap=linked",
+    "typecheck": "tsc --noEmit",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "lit": "^3.3.2"
+  }
+}
