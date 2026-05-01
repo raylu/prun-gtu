@@ -363,11 +363,16 @@ export class GTUTable extends LitElement {
 	private renderKit(kit: Kit) {
 		const total = entries(kit.components).reduce(
 				(acc, [ticker, count]) => acc + (count! * prices[ticker]), 0);
+
+		let detail = html`<img src="imgs/${kit.img}">`
+		if (kit.img === null)
+			detail = html`<p>${Object.keys(kit.components).join(' ')}</p>`;
+
 		return html`
 			<article @click=${() => this.onKitClick(kit)}>
 				<h3>${kit.name}</h3>
 				<b>$${fmt.format(total)}</b>
-				${kit.img && html`<img src="imgs/${kit.img}">`}
+				${detail}
 			</article>
 		`
 	}
