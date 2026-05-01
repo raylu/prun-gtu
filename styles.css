@@ -10,14 +10,14 @@ body {
 	min-height: 98vh;
 	font-family: sans-serif;
 	font-size: 12pt;
-	background: center / cover no-repeat url(ship.avif) fixed;
+	background: center / cover no-repeat url(imgs/ship.avif) fixed;
 	background-color: #000;
 	color: #eee;
 	display: grid;
 }
 
 main {
-	max-width: 700px;
+	max-width: 960px;
 	margin: auto;
 	padding: 1em;
 	background: #000d;

@@ -59,6 +59,7 @@ const prices = {
 const ships: Kit[] = [
 	{
 		name: 'Enhanced large transport',
+		img: 'enhanced_large_transport.jpg',
 		components: {
 			LHP: 94,
 			BR1: 1,
@@ -77,6 +78,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Expedition large transport',
+		img: 'expedition_large_transport.jpg',
 		components: {
 			BR1: 1,
 			CQL: 1,
@@ -97,6 +99,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Standard large transport',
+		img: 'standard_large_transport.jpg',
 		components: {
 			BHP: 90,
 			BR1: 1,
@@ -115,6 +118,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Enhanced heavy freighter',
+		img: 'enhanced_heavy_freighter.jpg',
 		components: {
 			LHP: 68,
 			BR1: 1,
@@ -133,6 +137,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Standard heavy freighter',
+		img: 'standard_heavy_freighter.jpg',
 		components: {
 			BHP: 64,
 			BR1: 1,
@@ -151,6 +156,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Enhanced BEAST',
+		img: 'enhanced_beast.jpg',
 		components: {
 			AEN: 1,
 			AHP: 159,
@@ -169,6 +175,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Standard BEAST',
+		img: 'standard_beast.jpg',
 		components: {
 			BHP: 157,
 			BR1: 1,
@@ -187,6 +194,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Firefly FTL courier',
+		img: 'firefly_ftl_courier.jpg',
 		components: {
 			AGS: 1,
 			BR1: 1,
@@ -205,6 +213,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'Voyager deep space explorer',
+		img: 'voyager_deep_space_explorer.jpg',
 		components: {
 			BR1: 1,
 			CQT: 1,
@@ -224,6 +233,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'STL-only courier shuttle',
+		img: 'stl-only_courier_shuttle.jpg',
 		components: {
 			AGS: 1,
 			BRS: 1,
@@ -237,6 +247,7 @@ const ships: Kit[] = [
 	},
 	{
 		name: 'STL-only economy shuttle',
+		img: 'stl-only_economy_shuttle.jpg',
 		components: {
 			BRS: 1,
 			CQT: 1,
@@ -251,6 +262,7 @@ const ships: Kit[] = [
 const upgrades: Kit[] = [
 	{
 		name: 'WCB starter ship upgrade',
+		img: 'wcb_upgrade.jpg',
 		components: {
 			BHP: 16,
 			LFE: 1,
@@ -260,6 +272,7 @@ const upgrades: Kit[] = [
 	},
 	{
 		name: 'Enhanced WCB starter ship upgrade',
+		img: null,
 		components: {
 			BHP: 20,
 			LFE: 1,
@@ -271,6 +284,7 @@ const upgrades: Kit[] = [
 	},
 	{
 		name: 'MCB starter ship upgrade',
+		img: 'mcb_upgrade.jpg',
 		components: {
 			BHP: 16,
 			LFE: 1,
@@ -280,6 +294,7 @@ const upgrades: Kit[] = [
 	},
 	{
 		name: 'LCB starter ship upgrade',
+		img: 'lcb_upgrade.jpg',
 		components: {
 			BHP: 42,
 			CQM: 1,
@@ -292,6 +307,7 @@ const upgrades: Kit[] = [
 
 interface Kit {
 	name: string,
+	img: string | null,
 	components: Partial<Record<keyof typeof prices, number>>
 }
 
@@ -310,7 +326,6 @@ export class GTUTable extends LitElement {
 		else
 			history.pushState({}, '', location.pathname);
 	}
-
 
 	protected render() {
 		const total = this.count.entries().reduce((acc, [ticker, count]) => acc + (count * prices[ticker]), 0);
@@ -345,23 +360,14 @@ export class GTUTable extends LitElement {
 		`;
 	}
 
-	private renderKit(upgrade: Kit) {
-		const total = entries(upgrade.components).reduce(
+	private renderKit(kit: Kit) {
+		const total = entries(kit.components).reduce(
 				(acc, [ticker, count]) => acc + (count! * prices[ticker]), 0);
 		return html`
-			<article @click=${() => this.onKitClick(upgrade)}>
-				<h3>${upgrade.name}</h3>
+			<article @click=${() => this.onKitClick(kit)}>
+				<h3>${kit.name}</h3>
 				<b>$${fmt.format(total)}</b>
-				<table>
-					<tbody>
-						${entries(upgrade.components).map(([ticker, count]) => html`
-							<tr>
-								<td>${ticker}</td>
-								<td>${count}</td>
-							</tr>
-						`)}
-					</tbody>
-				</table>
+				${kit.img && html`<img src="imgs/${kit.img}">`}
 			</article>
 		`
 	}
@@ -416,7 +422,14 @@ export class GTUTable extends LitElement {
 					background-color: #111c;
 				}
 
-				h3 { margin: 0 0 0.5em; }
+				h3 {
+					margin: 0 0 0.5em;
+				}
+
+				img {
+					display: block;
+					width: 260px;
+				}
 			}
 		}
 
