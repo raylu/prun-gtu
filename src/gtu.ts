@@ -271,18 +271,6 @@ const upgrades: Kit[] = [
 		}
 	},
 	{
-		name: 'Enhanced WCB starter ship upgrade',
-		img: null,
-		components: {
-			BHP: 20,
-			LFE: 1,
-			LFL: 1,
-			MSL: 1,
-			SSC: 32,
-			WCB: 1,
-		}
-	},
-	{
 		name: 'MCB starter ship upgrade',
 		img: 'mcb_upgrade.jpg',
 		components: {
@@ -307,7 +295,7 @@ const upgrades: Kit[] = [
 
 interface Kit {
 	name: string,
-	img: string | null,
+	img: string,
 	components: Partial<Record<keyof typeof prices, number>>
 }
 
@@ -363,16 +351,11 @@ export class GTUTable extends LitElement {
 	private renderKit(kit: Kit) {
 		const total = entries(kit.components).reduce(
 				(acc, [ticker, count]) => acc + (count! * prices[ticker]), 0);
-
-		let detail = html`<img src="imgs/${kit.img}">`
-		if (kit.img === null)
-			detail = html`<p>${Object.keys(kit.components).join(' ')}</p>`;
-
 		return html`
 			<article @click=${() => this.onKitClick(kit)}>
 				<h3>${kit.name}</h3>
 				<b>$${fmt.format(total)}</b>
-				${detail}
+				<img src="imgs/${kit.img}">
 			</article>
 		`
 	}
